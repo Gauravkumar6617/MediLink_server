@@ -24,14 +24,28 @@ password:{
 role:{
     type:String,
     enum:['hospital'],
-    required:true
+    default:'hospital'
 },
+
+
 hospitalCode: {
     type: String,
     required: true,
     unique: true,
     default: () => `HOSP-${Math.floor(1000 + Math.random() * 9000)}`, 
   },
+  location:{
+    type:{
+    type:String,
+    enum:['Point'],
+    default:'point',
+    },
+    coordinates:{
+        type:[Number],
+        required:true
+    }
+  },
 },{timestamps:true});
+HospitalScehma.index({ location: "2dsphere" });
 
 export default mongoose.model("Hospital", HospitalScehma);
